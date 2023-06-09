@@ -3,6 +3,7 @@ import 'package:cart_using_block/ui/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'adress_bloc/address_bloc.dart';
 import 'data/repository.dart';
 
 void main() {
@@ -21,9 +22,14 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home:  BlocProvider(
-        create: (context) => ContactBloc(repository: CoupinosLogin()),
-        child: HomePage(),),
+      home: MultiBlocProvider(
+        providers: [
+          BlocProvider(create: (context) => ContactBloc(repository: CoupinosLogin()),),
+          BlocProvider(create: (context) => AddressBloc(repository: CoupinosLogin()),),
+      ],
+        child: HomePage(),
+    ),
     );
+
   }
 }

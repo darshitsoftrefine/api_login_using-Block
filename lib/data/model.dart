@@ -127,7 +127,6 @@ class Address {
   DateTime resendValidationCodeRestrictionUpto;
   bool isAddressCodeResent;
   int wrongAttemptCount;
-  DateTime wrongCodeBlockedUpto;
   DateTime lastUpdatedOn;
 
   Address({
@@ -141,7 +140,7 @@ class Address {
     required this.resendValidationCodeRestrictionUpto,
     required this.isAddressCodeResent,
     required this.wrongAttemptCount,
-    required this.wrongCodeBlockedUpto,
+
     required this.lastUpdatedOn,
   });
 
@@ -156,7 +155,7 @@ class Address {
     resendValidationCodeRestrictionUpto: DateTime.parse(json["resendValidationCodeRestrictionUpto"]),
     isAddressCodeResent: json["isAddressCodeResent"],
     wrongAttemptCount: json["wrongAttemptCount"],
-    wrongCodeBlockedUpto: DateTime.parse(json["wrongCodeBlockedUpto"]),
+
     lastUpdatedOn: DateTime.parse(json["lastUpdatedOn"]),
   );
 
@@ -171,7 +170,6 @@ class Address {
     "resendValidationCodeRestrictionUpto": resendValidationCodeRestrictionUpto.toIso8601String(),
     "isAddressCodeResent": isAddressCodeResent,
     "wrongAttemptCount": wrongAttemptCount,
-    "wrongCodeBlockedUpto": wrongCodeBlockedUpto.toIso8601String(),
     "lastUpdatedOn": lastUpdatedOn.toIso8601String(),
   };
 }

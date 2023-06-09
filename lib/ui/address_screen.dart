@@ -1,25 +1,26 @@
+import 'package:cart_using_block/adress_bloc/address_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../bloc/contact_bloc.dart';
-import '../bloc/contact_event.dart';
-import '../bloc/contact_state.dart';
+import '../adress_bloc/address_bloc.dart';
+import '../adress_bloc/address_state.dart';
 import '../data/model.dart';
-import 'address_screen.dart';
 
-class HomePage extends StatefulWidget {
+class AddressPage extends StatefulWidget {
+
   @override
-  _HomePageState createState() => _HomePageState();
+  State<AddressPage> createState() => _AddressPageState();
 }
 
-class _HomePageState extends State<HomePage> {
-  late ContactBloc contactBloc;
+class _AddressPageState extends State<AddressPage> {
+
+  late AddressBloc addressBloc;
 
 
   @override
   void initState() {
-    contactBloc = BlocProvider.of<ContactBloc>(context);
-    contactBloc.add(FetchContactEvent());
+    addressBloc = BlocProvider.of<AddressBloc>(context);
+    addressBloc.add(FetchAddressEvent());
     super.initState();
   }
 
@@ -27,19 +28,19 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Coupinos Contact..'),
+        title: Text('Coupinos Address..'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Container(
-          child: BlocBuilder<ContactBloc, ContactState>(builder: (context, state) {
-            if (state is ContactInitialState) {
+          child: BlocBuilder<AddressBloc, AddressState>(builder: (context, state) {
+            if (state is AddressInitialState) {
               return _buildLoading();
-            } else if (state is ContactLoadingState) {
+            } else if (state is AddressLoadingState) {
               return _buildLoading();
-            } else if (state is ContactLoadedState) {
-              return _contactList(state.contDetails as ContactPerson);
-            } else if (state is ContactErrorState) {
+            } else if (state is AddressLoadedState) {
+              return _contactList(state.adrDetails as Address);
+            } else if (state is AddressErrorState) {
               return _buildError();
             } else {
               throw Exception();
@@ -50,20 +51,18 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
-
-//Widgets...
 Widget _buildLoading() {
   return Center(
-        child: Column(
-          children: [
-            CircularProgressIndicator(),
-            Text('Please Wait for a Minute', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),)
-          ],
-        ),
-      );
+    child: Column(
+      children: [
+        CircularProgressIndicator(),
+        Text('Please Wait for a Minute', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),)
+      ],
+    ),
+  );
 }
 
-Widget _contactList(ContactPerson contDetails) {
+Widget _contactList(Address adrDetails) {
   return Center(
     child: Padding(
       padding: const EdgeInsets.all(8.0),
@@ -71,10 +70,9 @@ Widget _contactList(ContactPerson contDetails) {
         child: ListView.builder(
             itemCount: 1,
             itemBuilder: (context, index) {
-              String baseUrl = 'https://coupinos-app.azurewebsites.net';
               return Column(
                 children: [
-                  Text("Contact Details", style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),),
+                  Text("Residential Details", style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),),
                   SizedBox(height: 20,),
                   Card(
                     elevation: 5.0,
@@ -82,43 +80,35 @@ Widget _contactList(ContactPerson contDetails) {
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Container(
-                              margin: EdgeInsets.symmetric(horizontal: 15),
-                              height: 90,
-                              width: 100,
-                              child: Image.network(baseUrl+'${contDetails.defaultImagePath}',
-                                fit: BoxFit.cover,
-                              ),
-                            ),
                             Expanded(
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Container(
                                         margin: EdgeInsets.only(top: 9),
-                                        child: Text("Name:- "+
-                                          contDetails.firstName+" "+contDetails.lastName,
+                                        child: Text("Country:- "+
+                                            adrDetails.country,
                                           style: TextStyle(
                                               fontSize: 25, fontWeight: FontWeight.bold),
                                         )),
                                     Container(
                                       margin: EdgeInsets.only(top: 3),
-                                      child: Text("Email Id:- "+
-                                        contDetails.email,
-                                        style: TextStyle(color: Colors.blue, fontSize: 20),
+                                      child: Text("City- "+
+                                          adrDetails.city,
+                                        style: TextStyle(fontSize: 20),
                                       ),
                                     ),
                                     Container(
                                       margin: EdgeInsets.only(top: 3),
-                                      child: Text("Gender:- "+
-                                        contDetails.gender,
-                                        style: TextStyle(color: Colors.brown, fontSize: 15),
+                                      child: Text("Street:- "+
+                                          adrDetails.street,
+                                        style: TextStyle(fontSize: 15),
                                       ),
                                     ),
                                     Container(
                                       margin: EdgeInsets.only(top: 3),
                                       child: Text("Date of Birth:- "+
-                                       '${contDetails.dob.day}'+"/"+'${contDetails.dob.month}'+"/"+'${contDetails.dob.year}',
+                                         adrDetails.postalCode,
                                         style: TextStyle(fontSize: 15),
                                       ),
                                     )
@@ -127,12 +117,7 @@ Widget _contactList(ContactPerson contDetails) {
                           ],
                         )),
                   ),
-                  // ElevatedButton(onPressed: (){
-                  //   Navigator.push(
-                  //     context,
-                  //     MaterialPageRoute(builder: (context) => AddressPage()),
-                  //   );
-                  // }, child: Text("Click Here to see Address Details"))
+                  ElevatedButton(onPressed: (){}, child: Text("Click Here to see Tariff Details"))
                 ],
               );
             }),
