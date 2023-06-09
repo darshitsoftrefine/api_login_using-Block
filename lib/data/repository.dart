@@ -2,12 +2,11 @@ import 'dart:convert';
 
 import 'model.dart';
 import 'package:http/http.dart' as http;
-abstract class Coupinos{
+abstract class ContactRepository{
   Future<ContactPerson> getcontDetails();
 }
 
-class CoupinosLogin extends Coupinos {
-
+class CoupinosLogin extends ContactRepository {
 
   @override
   Future<ContactPerson> getcontDetails() async {

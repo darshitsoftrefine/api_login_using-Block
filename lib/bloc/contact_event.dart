@@ -1,9 +1,9 @@
-part of 'food_bloc.dart';
+import 'package:equatable/equatable.dart';
 
-abstract class FoodEvent extends Equatable {
-  const FoodEvent();
+abstract class ContactEvent extends Equatable {
+  const ContactEvent();
 }
-class FetchFoodEvent extends FoodEvent {
+class FetchContactEvent extends ContactEvent {
   @override
   // TODO: implement props
   List<Object?> get props => throw UnimplementedError();

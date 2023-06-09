@@ -1,4 +1,9 @@
+import 'package:cart_using_block/bloc/contact_bloc.dart';
+import 'package:cart_using_block/ui/home_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'data/repository.dart';
 
 void main() {
   runApp(const MyApp());
@@ -24,7 +29,9 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home:  BlocProvider(
+        create: (context) => ContactBloc(repository: CoupinosLogin()),
+        child: HomePage(),),
     );
   }
 }
